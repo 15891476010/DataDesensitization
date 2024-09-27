@@ -9,7 +9,7 @@
 
   <name>DataDesensitization</name>
   <description>实体类数据脱敏</description>
-  <url>http://maven.apache.org</url>
+  <url>https://central.sonatype.com</url>
 
   <!-- 仓库配置 (发布到 Maven 仓库的相关信息) -->
   <scm>
