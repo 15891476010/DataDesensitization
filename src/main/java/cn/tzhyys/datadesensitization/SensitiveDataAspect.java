@@ -6,10 +6,18 @@ import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 
+/**
+ * Sensitive data processing facets
+ */
 @Aspect
 @Component
 public class SensitiveDataAspect {
 
+    /**
+     * Processing return result
+     * @param result
+     * @throws IllegalAccessException
+     */
     @AfterReturning(pointcut = "execution(* *..service..*(..))", returning = "result")
     public void afterReturning(Object result) throws IllegalAccessException {
         if (result != null) {
@@ -17,6 +25,11 @@ public class SensitiveDataAspect {
         }
     }
 
+    /**
+     * Handling sensitive fields
+     * @param result
+     * @throws IllegalAccessException
+     */
     private void handleSensitiveFields(Object result) throws IllegalAccessException {
         // 遍历对象中的所有字段，查找 @Sensitive 注解
         for (Field field : result.getClass().getDeclaredFields()) {
@@ -33,6 +46,12 @@ public class SensitiveDataAspect {
         }
     }
 
+    /**
+     * Desensitization according to type
+     * @param value
+     * @param type
+     * @return
+     */
     private String mask(String value, DesensitizationType type) {
         switch (type) {
             case PHONE:

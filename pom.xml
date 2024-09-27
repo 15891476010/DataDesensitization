@@ -7,26 +7,30 @@
   <version>1.0.3</version>
   <packaging>jar</packaging>
 
-  <name>DataDesensitization</name>
-  <url>https://github.com/Z19235/myapi-common</url>
-  <scm>
-    <url>https://github.com/Z19235/myapi-common</url>
-    <connection>scm:git:https://github.com/Z19235/myapi-common.git</connection>
-    <developerConnection>scm:git:https://github.com/Z19235/myapi-common.git</developerConnection>
-  </scm>
+  <name>${project.groupId}:${project.artifactId}</name>
+  <description>This project provides data desensitization functionalities for sensitive data handling.</description>
+  <url>https://github.com/15891476010/DataDesensitization</url>
 
   <developers>
     <developer>
       <!--此处填写gpg用户id-->
-      <id>dell</id>
+      <id>central</id>
       <!--此处填写gpg用户名-->
-      <name>dell</name>
+      <name>MrZhang</name>
       <!--此处填写gpg邮箱-->
-      <email>1923532529@qq.com</email>
-      <url>https://github.com/github用户名/myapi-common</url>
+      <email>zhang10867779@gmail.com</email>
+      <url>https://github.com/15891476010/DataDesensitization</url>
       <timezone>+8</timezone>
+      <organization>Sonatype</organization>
+      <organizationUrl>http://www.sonatype.com</organizationUrl>
     </developer>
   </developers>
+
+  <scm>
+    <url>https://github.com/15891476010/DataDesensitization</url>
+    <connection>scm:git:https://github.com/15891476010/DataDesensitization.git</connection>
+    <developerConnection>scm:git:https://github.com/15891476010/DataDesensitization.git</developerConnection>
+  </scm>
 
   <licenses>
     <license>
@@ -73,8 +77,24 @@
       <artifactId>jackson-datatype-jsr310</artifactId>
       <version>2.13.3</version>
     </dependency>
-
   </dependencies>
+
+  <distributionManagement>
+    <snapshotRepository>
+      <id>central</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+    <repository>
+      <id>central</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+  </distributionManagement>
+
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+  </properties>
 
   <!-- omitted xml -->
 <!--  <distributionManagement>-->
@@ -85,4 +105,76 @@
 <!--      <url>https://yunwangtong-maven.pkg.coding.net/repository/DataDesensitization/maven/</url>-->
 <!--    </repository>-->
 <!--  </distributionManagement>-->
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>2.2.1</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+<!--      <plugin>-->
+<!--        <groupId>org.apache.maven.plugins</groupId>-->
+<!--        <artifactId>maven-javadoc-plugin</artifactId>-->
+<!--        <version>2.9.1</version>-->
+<!--        <executions>-->
+<!--          <execution>-->
+<!--            <goals>-->
+<!--              <goal>jar</goal>-->
+<!--            </goals>-->
+<!--          </execution>-->
+<!--        </executions>-->
+<!--      </plugin>-->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <version>1.5</version>
+        <executions>
+          <execution>
+            <id>sign-artifacts</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.9.1</version> <!-- 确保使用的是最新版本 -->
+        <executions>
+          <execution>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <sourcepath>${basedir}/src/main/java</sourcepath>
+          <encoding>UTF-8</encoding>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.sonatype.central</groupId>
+        <artifactId>central-publishing-maven-plugin</artifactId>
+        <version>0.6.0</version>
+        <extensions>true</extensions>
+        <configuration>
+          <publishingServerId>central</publishingServerId>
+          <autoPublish>true</autoPublish>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
