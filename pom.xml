@@ -4,121 +4,85 @@
 
   <groupId>cn.tzhyys</groupId>
   <artifactId>DataDesensitization</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.3</version>
   <packaging>jar</packaging>
 
   <name>DataDesensitization</name>
-  <description>实体类数据脱敏</description>
-  <url>https://github.com/15891476010/DataDesensitization</url> <!-- 修改为项目地址 -->
-
-  <!-- 仓库配置 (发布到 Maven 仓库的相关信息) -->
+  <url>https://github.com/Z19235/myapi-common</url>
   <scm>
-    <connection>scm:git:https://github.com/15891476010/DataDesensitization.git</connection>
-    <developerConnection>scm:git:https://github.com/15891476010/DataDesensitization.git</developerConnection>
-    <url>https://github.com/15891476010/DataDesensitization.git</url>
+    <url>https://github.com/Z19235/myapi-common</url>
+    <connection>scm:git:https://github.com/Z19235/myapi-common.git</connection>
+    <developerConnection>scm:git:https://github.com/Z19235/myapi-common.git</developerConnection>
   </scm>
 
-  <!-- 开发者信息 -->
   <developers>
     <developer>
-      <id>zhang</id> <!-- 建议加入 id -->
-      <name>MrZhang</name>
-      <email>zhang10867779@gmail.com</email>
+      <!--此处填写gpg用户id-->
+      <id>dell</id>
+      <!--此处填写gpg用户名-->
+      <name>dell</name>
+      <!--此处填写gpg邮箱-->
+      <email>1923532529@qq.com</email>
+      <url>https://github.com/github用户名/myapi-common</url>
+      <timezone>+8</timezone>
     </developer>
   </developers>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <gpg.executable>gpg</gpg.executable> <!-- 设置 GPG 签名的可执行文件 -->
-    <gpg.passphrase>your-gpg-passphrase</gpg.passphrase> <!-- 设置 GPG 密钥短语 -->
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
-  </properties>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
 
   <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+      <version>2.6.13</version>
+    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+    <!-- Spring AOP 依赖 -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-aop</artifactId>
+      <version>3.3.2</version>
+    </dependency>
+    <!-- Jackson 核心依赖 -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.13.3</version> <!-- 您可以根据需要选择最新的版本 -->
+    </dependency>
+
+    <!-- Jackson 注解依赖 -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-annotations</artifactId>
+      <version>2.13.3</version>
+    </dependency>
+
+    <!-- 如果需要额外的类型支持 (如 Java 8 日期/时间 API) -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.datatype</groupId>
+      <artifactId>jackson-datatype-jsr310</artifactId>
+      <version>2.13.3</version>
+    </dependency>
+
   </dependencies>
 
-  <distributionManagement>
-    <repository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    </repository>
-    <snapshotRepository>
-      <id>ossrh-snapshots</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-    </snapshotRepository>
-  </distributionManagement>
-
-  <build>
-    <plugins>
-      <!-- 源码打包插件 -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-        <version>3.3.0</version>
-        <executions>
-          <execution>
-            <id>attach-sources</id>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-
-      <!-- Javadoc 插件 -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.9.1</version>
-        <configuration>
-          <aggregate>true</aggregate>
-          <charset>UTF-8</charset>
-          <encoding>UTF-8</encoding>
-          <docencoding>UTF-8</docencoding>
-          <additionalparam>-Xdoclint:none</additionalparam>
-        </configuration>
-        <executions>
-          <execution>
-            <id>attach-javadocs</id>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-
-      <!-- GPG 签名插件 -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-gpg-plugin</artifactId>
-        <version>3.1.0</version>
-        <executions>
-          <execution>
-            <id>sign-artifacts</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>sign</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-
-      <!-- 部署到 Maven Central 的插件 -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-deploy-plugin</artifactId>
-        <version>2.8.2</version>
-        <configuration>
-          <skip>true</skip>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+  <!-- omitted xml -->
+<!--  <distributionManagement>-->
+<!--    <repository>-->
+<!--      &lt;!&ndash;必须与 settings.xml 的 id 一致&ndash;&gt;-->
+<!--      <id>yunwangtong-DataDesensitization-maven</id>-->
+<!--      <name>maven-1727447107215</name>-->
+<!--      <url>https://yunwangtong-maven.pkg.coding.net/repository/DataDesensitization/maven/</url>-->
+<!--    </repository>-->
+<!--  </distributionManagement>-->
 </project>
