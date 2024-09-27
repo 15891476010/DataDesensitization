@@ -1,5 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>cn.tzhyys</groupId>
@@ -9,19 +9,19 @@
 
   <name>DataDesensitization</name>
   <description>实体类数据脱敏</description>
-  <url>https://central.sonatype.com</url>
+  <url>https://github.com/15891476010/DataDesensitization</url> <!-- 修改为项目地址 -->
 
   <!-- 仓库配置 (发布到 Maven 仓库的相关信息) -->
   <scm>
-    <!--scm:git:不变，后面改成克隆仓库时的https地址-->
     <connection>scm:git:https://github.com/15891476010/DataDesensitization.git</connection>
     <developerConnection>scm:git:https://github.com/15891476010/DataDesensitization.git</developerConnection>
-    <!--仓库地址-->
     <url>https://github.com/15891476010/DataDesensitization.git</url>
   </scm>
-  <!--开发者相关信息-->
+
+  <!-- 开发者信息 -->
   <developers>
     <developer>
+      <id>zhang</id> <!-- 建议加入 id -->
       <name>MrZhang</name>
       <email>zhang10867779@gmail.com</email>
     </developer>
@@ -29,6 +29,10 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <gpg.executable>gpg</gpg.executable> <!-- 设置 GPG 签名的可执行文件 -->
+    <gpg.passphrase>your-gpg-passphrase</gpg.passphrase> <!-- 设置 GPG 密钥短语 -->
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
 
   <dependencies>
@@ -40,8 +44,20 @@
     </dependency>
   </dependencies>
 
+  <distributionManagement>
+    <repository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+    <snapshotRepository>
+      <id>ossrh-snapshots</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+    </snapshotRepository>
+  </distributionManagement>
+
   <build>
     <plugins>
+      <!-- 源码打包插件 -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
@@ -49,9 +65,14 @@
         <executions>
           <execution>
             <id>attach-sources</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
           </execution>
         </executions>
       </plugin>
+
+      <!-- Javadoc 插件 -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
@@ -66,9 +87,14 @@
         <executions>
           <execution>
             <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
           </execution>
         </executions>
       </plugin>
+
+      <!-- GPG 签名插件 -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-gpg-plugin</artifactId>
@@ -77,19 +103,20 @@
           <execution>
             <id>sign-artifacts</id>
             <phase>verify</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
           </execution>
         </executions>
       </plugin>
 
-      <!--maven插件-->
+      <!-- 部署到 Maven Central 的插件 -->
       <plugin>
-        <groupId>org.sonatype.central</groupId>
-        <artifactId>central-publishing-maven-plugin</artifactId>
-        <version>0.4.0</version>
-        <extensions>true</extensions>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>2.8.2</version>
         <configuration>
-          <publishingServerId>central</publishingServerId>
-          <tokenAuth>true</tokenAuth>
+          <skip>true</skip>
         </configuration>
       </plugin>
     </plugins>
